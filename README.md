@@ -1,3 +1,41 @@
+# Dockerized GeoCouch
+
+## Work in Progress
+
+
+To be used like:
+
+```
+git clone https://github.com/14mmm/docker-geocouch.git
+cd docker-geocouch
+docker build -t 14mmm/geocouch(:<version>) .
+docker run -d -p 5984:5984 14mmm/geocouch
+```
+
+To attach an 'inspection container' to the VOLUME paths from the Dockerfile do:
+
+```
+docker ps # to look up the actual container's name
+docker run -i --volumes-from="<container name>" -t ubuntu /bin/bash
+```
+
+Use `docker logs <container name>` to get look at Stdout from the container.
+
+## Not yet investigated
+
+* https://github.com/jhs/build-couchdb
+* http://rcouch.org/
+
+---
+
+### Comments welcome.
+
+---
+
+Original README.md below
+
+---
+
 YADC
 ===
 

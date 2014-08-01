@@ -5,14 +5,22 @@
 chown -R couchdb:couchdb /usr/local/var/lib/couchdb \
   /usr/local/var/log/couchdb \
   /usr/local/var/run/couchdb \
-  /usr/local/etc/couchdb
+  /usr/local/etc/couchdb \
+  /opt/geocouch-couchdb1.3.x/ebin
+# make couchdb beam plugins readable by the unpriviledged user it will run as.
 
 chmod -R 0770 /usr/local/var/lib/couchdb \
   /usr/local/var/log/couchdb \
   /usr/local/var/run/couchdb \
-  /usr/local/etc/couchdb
+  /usr/local/etc/couchdb \
+  /opt/geocouch-couchdb1.3.x/ebin
 
 chmod 664 /usr/local/etc/couchdb/*.ini
 chmod 775 /usr/local/etc/couchdb/*.d
+
+# expose environmental variables
+echo $PATH > /usr/local/var/log/couchdb/path.txt
+echo $ERL_FLAGS > /usr/local/var/log/couchdb/erl_flags.txt
+# to be inspected by an external bash container
 
 exec sudo -i -u couchdb mon couchdb
