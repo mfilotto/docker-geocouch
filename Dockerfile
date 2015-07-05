@@ -2,10 +2,12 @@ FROM klaemo/couchdb-base
 
 MAINTAINER Clemens Stolle klaemo@fastmail.fm + Jon Richter post@jonrichter.de
 
+ENV COUCHDB_VERSION 1.6.1
+
 # Get the source
 RUN cd /opt && \
- wget http://apache.openmirror.de/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz && \
- tar xzf /opt/apache-couchdb-1.6.0.tar.gz
+ wget http://apache.openmirror.de/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz && \
+ tar xzf /opt/apache-couchdb-$COUCHDB_VERSION.tar.gz
 
 # build couchdb
 RUN cd /opt/apache-couchdb-* && ./configure && make && make install
@@ -21,7 +23,7 @@ RUN (mkdir /tmp/mon && cd /tmp/mon && curl -L# https://github.com/visionmedia/mo
 ### GeoCouch Setup
 ## With inspiration from https://github.com/rstiller/dockerfiles/blob/master/geocouch/geocouch.tpl
 
-ENV COUCH_SRC /opt/apache-couchdb-1.6.0/src/couchdb/
+ENV COUCH_SRC /opt/apache-couchdb-$COUCHDB_VERSION/src/couchdb/
 
 RUN cd /opt && \
  wget https://github.com/couchbase/geocouch/archive/couchdb1.3.x.tar.gz && \
@@ -37,7 +39,7 @@ RUN sed -e 's/^bind_address = .*$/bind_address = 0.0.0.0/' -i /usr/local/etc/cou
 RUN /opt/couchdb-config
 
 # Define mountable directories.
-VOLUME ["/usr/local/var/log/couchdb", "/usr/local/var/lib/couchdb", "/usr/local/etc/couchdb", "/opt/apache-couchdb-1.6.0/", "/opt/geocouch-couchdb1.3.x"]
+VOLUME ["/usr/local/var/log/couchdb", "/usr/local/var/lib/couchdb", "/usr/local/etc/couchdb", "/opt/apache-couchdb-$COUCHDB_VERSION/", "/opt/geocouch-couchdb1.3.x"]
 # couchdb + geocouch source folders added for debugging
 
 # make erlang aware of the geocouch couchdb plugin beam files
