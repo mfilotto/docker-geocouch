@@ -33,6 +33,7 @@ RUN cd /opt/geocouch-couchdb1.3.x ; make
 ###
 
 ADD ./opt /opt
+COPY cors.ini /usr/local/etc/couchdb/local.d/
 
 # Configuration
 RUN sed -e 's/^bind_address = .*$/bind_address = 0.0.0.0/' -i /usr/local/etc/couchdb/default.ini
