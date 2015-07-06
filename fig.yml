@@ -1,0 +1,8 @@
+geocouch:
+  image: mfilotto/geocouch
+  command: gulp serve
+  hostname: geocouch
+  ports:
+    - "5984:5984"
+  volumes:
+    - ./geocouch_data:/data
